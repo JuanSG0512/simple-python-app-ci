@@ -1,30 +1,25 @@
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
                 git 'https://github.com/JuanSG0512/simple-python-app-ci.git'
             }
         }
-
-        stage('Install Python') {
+        stage('Instalar Python') {
             steps {
-                sh 'sudo apt-get update'
-                sh 'sudo apt-get install -y python3 python3-venv'
+                sh 'apt-get update'
+                sh 'apt-get install -y python3 python3-venv'
             }
         }
-
-        stage('Install Dependencies') {
+        stage('Instalar dependencias') {
             steps {
-                sh 'python3 -m venv venv'
-                sh '. venv/bin/activate && pip install -r requirements.txt || true'
+                sh 'pip3 install -r requirements.txt'
             }
         }
-
-        stage('Run Tests') {
+        stage('Ejecutar pruebas') {
             steps {
-                sh '. venv/bin/activate && python -m unittest discover -s .'
+                sh 'python3 -m unittest discover'
             }
         }
     }
